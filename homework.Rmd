@@ -38,24 +38,35 @@ dpois(3, lambda=15)
 #### returns 0.0001720701, so 0.01720701% probability, also unlikely
 
 ## Plot the relevant Poisson mass function over the values in range 0 ≤ x ≤ 30
-###
+### Using dpois from 0 to 30 and spotting as points over x = a vector from 0 to 30
 
+z <- dpois(0:30, lambda=15)
 
+x <- c(0:30)
+
+plot(x , z, cex = 0.4)
 
 ####
 
-##Simulate 104 results from this distribution (i.e., 2 years of Saturday monitoring sessions).
-###????????????????????
+## Simulate 104 results from this distribution (i.e., 2 years of Saturday monitoring sessions).
+### 
 
-x <- rpois(10000, 0, 1)
+x <- rpois(104, lambda=15)
 
 set <- NULL  # sets up a dummy variable to hold our 10000 simulations
 n <- 104
-for (i in 1:10000) {
+for (i in 1:104) {
     set[i] <- mean(sample(x, n, replace = TRUE))
 }
 
-####
+set
+
+## Plot the simulated results using hist() and use xlim() to set the horizontal limits to be from 0 to 30. How does your histogram compare to the shape of the probability mass function you plotted above?
+###
+
+hist(set, xlim=range(c(0:30)))
+
+#### This distribution is much narrower than the one made using the probability mass function. This happens because increasing the sample size or number of simulated values tightens the distribution and decreases SE
 
 ## Plot the simulated results using hist() and use xlim() to set the horizontal limits to be from 0 to 30. How does your histogram compare to the shape of the probability mass function you plotted above?
 ### 
