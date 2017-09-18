@@ -62,17 +62,12 @@ for (i in 1:104) {
 set
 
 ## Plot the simulated results using hist() and use xlim() to set the horizontal limits to be from 0 to 30. How does your histogram compare to the shape of the probability mass function you plotted above?
-###
+
+### applying hist() with an x range of 0-30 to "set", which we filled using the bootstrapping loop above
 
 hist(set, xlim=range(c(0:30)))
 
-#### This distribution is much narrower than the one made using the probability mass function. This happens because increasing the sample size or number of simulated values tightens the distribution and decreases SE
-
-## Plot the simulated results using hist() and use xlim() to set the horizontal limits to be from 0 to 30. How does your histogram compare to the shape of the probability mass function you plotted above?
-### 
-
-
-####
+#### This distribution is much narrower than the one made using the probability mass function. This happens because increasing the sample size or number of simulated values tightens the distribution and decreases variance/standard deviation because n is in the denominator of these equations.
 
 ```
 
