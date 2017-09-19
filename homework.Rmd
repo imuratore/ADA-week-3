@@ -10,32 +10,45 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## R Markdown
 
-```{r}
-# homework 02
+homework 02
 
 ## What is the probability that she will hear more than 8 calls during any given session?
 ### using a poisson probability distribution to get the upper tail using 9 position along the distribution because that's how I interpretted "more than 8"
 
+```{r}
+
 ppois(9, lambda=15, lower=FALSE) 
+
+```
 
 #### returns 0.93 etc, so the answer is a ~93% probability of more than 8 assuming the mean is accurate
 
 ## What is the probability that she will hear no calls in a session?
 ### using a poisson probability distribution to get the lower tail using 0 as the position along the distribution
 
+```{r}
+
 ppois(0, lambda=15)
+
+```
 
 #### returns 0.0000003059023, so a 0.00003059023% probability, quite unlikely
 
 ## What is the probability that she will hear exactly 3 calls in a session?
 ### using a poisson density distribution (since this is just for one specific value) to get the probability of hearing exactly 3 calls
 
+```{r}
+
 dpois(3, lambda=15)
+
+```
 
 #### returns 0.0001720701, so 0.01720701% probability, also unlikely
 
 ## Plot the relevant Poisson mass function over the values in range 0 ≤ x ≤ 30
 ### Using dpois from 0 to 30 and spotting as points over x = a vector from 0 to 30
+
+```{r}
 
 z <- dpois(0:30, lambda=15)
 
@@ -43,10 +56,14 @@ x <- c(0:30)
 
 plot(x , z, cex = 0.4)
 
+```
+
 ####
 
 ## Simulate 104 results from this distribution (i.e., 2 years of Saturday monitoring sessions).
 ### 
+
+```{r}
 
 x <- rpois(104, lambda=15)
 
@@ -58,14 +75,18 @@ for (i in 1:104) {
 
 set
 
+```
+
 ## Plot the simulated results using hist() and use xlim() to set the horizontal limits to be from 0 to 30. How does your histogram compare to the shape of the probability mass function you plotted above?
 
 ### applying hist() with an x range of 0-30 to "set", which we filled using the bootstrapping loop above
 
+```{r}
+
 hist(set, xlim=range(c(0:30)))
+
+```
 
 #### This distribution is much narrower than the one made using the probability mass function. This happens because increasing the sample size or number of simulated values tightens the distribution and decreases variance/standard deviation because n is in the denominator of these equations.
 
 ```
-
-## 
