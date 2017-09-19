@@ -8,9 +8,9 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+# R Markdown
 
-homework 02
+# homework 02
 
 ## What is the probability that she will hear more than 8 calls during any given session?
 ### using a poisson probability distribution to get the upper tail using 9 position along the distribution because that's how I interpretted "more than 8"
