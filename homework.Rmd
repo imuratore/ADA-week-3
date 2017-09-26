@@ -55,7 +55,7 @@ z <- dpois(0:30, lambda=15)
 
 x <- c(0:30)
 
-plot(x , z, cex = 0.4)
+barplot(z, names.arg = x, space = 0, xlab = "x", ylab = "Pr(X = x)", main = "Poisson Mass Function")
 
 ```
 
@@ -97,4 +97,77 @@ hist(x, xlim=range(c(0:30)))
 
 #### This distribution is much less smooth and symmetrical than the one made using the probability mass function. The probability mass function histogram is more "perfect" because it has an infinite sample size, as opposed to 104, and this tightens the distribution and decreases variance/standard deviation because n is in the denominator of these equations.
 
+# second homework problem
+## Load in the dataset “zombies.csv” from my GitHub repo
+### downloading zombies.csv from GitHub using curl, formatting using read.csv with commas as separation
+
+```{r}
+library(curl)
+f <- curl("https://raw.githubusercontent.com/fuzzyatelin/fuzzyatelin.github.io/master/AN597_Fall17/zombies.csv")
+
+d <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
+head(d)
+
 ```
+## Calculate the population mean and standard deviation for each quantitative random variable (height, weight, age, number of zombies killed, and years of education). NOTE: You will not want to use the built in var() and  sd() commands as these are for samples.
+### using mean function to average the height variable
+
+```{r}
+
+h <- d$height
+
+mean(h)
+
+w <- d$weight
+
+mean(w)
+
+a <- d$age
+
+mean(a)
+
+z <- d$zombies_killed
+
+mean(z)
+
+y <- d$years_of_education
+
+mean(y)
+
+```
+###
+
+```{r}
+pop_v <- function(x) {
+    sum((x - mean(x))^2)/(length(x))
+}
+pop_v(h)
+
+pop_v(w)
+
+pop_v(a)
+
+pop_v(z)
+
+pop_v(y)
+
+```
+###
+
+```{r}
+
+pop_sd <- function(x) {
+    sqrt(pop_v(x))
+}
+pop_sd(h)
+
+pop_sd(w)
+
+pop_sd(a)
+
+pop_sd(z)
+
+pop_sd(y)
+
+```
+
