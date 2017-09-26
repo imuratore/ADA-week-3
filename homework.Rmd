@@ -135,6 +135,7 @@ y <- d$years_of_education
 mean(y)
 
 ```
+####
 ###
 
 ```{r}
@@ -152,6 +153,7 @@ pop_v(z)
 pop_v(y)
 
 ```
+####
 ###
 
 ```{r}
@@ -231,18 +233,33 @@ p  # and, finally, we plot the object
 ## Using histograms and Q-Q plots, check whether the quantitative variables seem to be drawn from a normal distribution. Which seem to be and which do not (hint: not all are drawn from the normal distribution)? For those that are not, can you determine what common distribution they are drawn from?
 ```{r}
 hist(h)
+
+qqnorm(h, main = "Height Normal Q-Q Plot")
+qqline(h, col = "gray")
 #normal
 
 hist(w)
+
+qqnorm(w, main = "Weight Normal Q-Q Plot")
+qqline(w, col = "gray")
 #not normal?
 
 hist(a)
+
+qqnorm(a, main = "Age Normal Q-Q Plot")
+qqline(a, col = "gray")
 #normal?
 
 hist(z)
+
+qqnorm(z, main = "Zombies Killed Normal Q-Q Plot")
+qqline(z, col = "gray")
 #def not normal
 
 hist(y)
+
+qqnorm(y, main = "Education Normal Q-Q Plot")
+qqline(y, col = "gray")
 #def not normal
 
 ```
@@ -252,6 +269,36 @@ hist(y)
 ###
 
 ```{r}
+k <- 1  # number of samples
+n <- 30  # size of each sample
+s <- NULL  # dummy variable to hold each sample
+for (i in 1:k) {
+    s[[i]] <- sample(h, size = n, replace = FALSE)
+}
+
+m <- NULL
+for (i in 1:k) {
+    m[i] <- mean(s[[i]])
+}
+mean(m)  
+
+stdev <- NULL
+for (i in 1:k) {
+    stdev[i] <- sd(s[[i]])
+}
+sem <- stdev/sqrt(n)  # a vector of SEs estimated from each sample 
+
+sigma <- sqrt(sum((h - mean(h))^2)/length(h))
+
+pop_se <- sigma/sqrt(n)
+pop_se 
+
+upper <- mean(h) + qnorm(0.95, mean = mean(h), sd = stdev) * pop_se
+lower <- mean(h) + qnorm(0.05, mean = mean(h), sd = stdev) * pop_se  
+ci <- c(lower, upper)
+ci
+
+
 ```
 ####
 
@@ -259,6 +306,25 @@ hist(y)
 ###
 
 ```{r}
+k <- 99  # number of samples
+n <- 30  # size of each sample
+s <- NULL  # dummy variable to hold each sample
+for (i in 1:k) {
+    s[[i]] <- sample(h, size = n, replace = FALSE)
+}
+
+m <- NULL
+for (i in 1:k) {
+    m[i] <- mean(s[[i]])
+}
+mean(m)  
+
+stdev <- NULL
+for (i in 1:k) {
+    stdev[i] <- sd(s[[i]])
+}
+
+
 ```
 ####
 
