@@ -170,4 +170,41 @@ pop_sd(z)
 pop_sd(y)
 
 ```
+## Use {ggplot} and make boxplots of each of these variables by gender.
+###
+```{r}
+library(ggplot2)
 
+p <- ggplot(data = d, aes(x = gender, y = h))
+p <- p + geom_boxplot()
+p <- p + theme(axis.text.x = element_text(angle = 90))
+p <- p + ylab("height")
+p
+
+p <- ggplot(data = d, aes(x = gender, y = w))
+p <- p + geom_boxplot()
+p <- p + theme(axis.text.x = element_text(angle = 90))
+p <- p + ylab("weight")
+p
+
+p <- ggplot(data = d, aes(x = gender, y = a))
+p <- p + geom_boxplot()
+p <- p + theme(axis.text.x = element_text(angle = 90))
+p <- p + ylab("age")
+p
+
+p <- ggplot(data = d, aes(x = gender, y = z))
+p <- p + geom_boxplot()
+p <- p + theme(axis.text.x = element_text(angle = 90))
+p <- p + ylab("zombies killed")
+p
+
+p <- ggplot(data = d, aes(x = gender, y = y))
+p <- p + geom_boxplot()
+p <- p + theme(axis.text.x = element_text(angle = 90))
+p <- p + ylab("years of education")
+p
+
+
+
+```
