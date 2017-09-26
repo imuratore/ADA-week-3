@@ -298,6 +298,18 @@ lower <- mean(h) + qnorm(0.05, mean = mean(h), sd = stdev) * pop_se
 ci <- c(lower, upper)
 ci
 
+#alternatively
+#upper <- mean(h) + qpois(0.95, mean = mean(h), sd = stdev) * pop_se
+#lower <- mean(h) + qpois(0.05, mean = mean(h), sd = stdev) * pop_se  
+#ci <- c(lower, upper)
+#ci
+
+#alternatively
+#upper <- mean(h) + qbinom(0.95, mean = mean(h), sd = stdev) * pop_se
+#lower <- mean(h) + qbinom(0.05, mean = mean(h), sd = stdev) * pop_se  
+#ci <- c(lower, upper)
+#ci
+
 
 ```
 ####
