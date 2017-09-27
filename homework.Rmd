@@ -14,15 +14,15 @@ knitr::opts_chunk$set(echo = TRUE)
 # homework 02
 
 ## What is the probability that she will hear more than 8 calls during any given session?
-### using a poisson probability distribution to get the upper tail using 9 position along the distribution because that's how I interpretted "more than 8"
+### using a poisson probability distribution to get the upper tail using 8 position along the distribution.
 
 ```{r}
 
-ppois(9, lambda=15, lower=FALSE) 
+ppois(8, lambda=15, lower=FALSE) 
 
 ```
 
-#### returns 0.93 etc, so the answer is a ~93% probability of more than 8 assuming the mean is accurate
+#### returns ~0.96, so the answer is a ~96% probability of more than 8 assuming the mean is accurate
 
 ## What is the probability that she will hear no calls in a session?
 ### using a poisson probability distribution to get the lower tail using 0 as the position along the distribution
@@ -59,45 +59,33 @@ barplot(z, names.arg = x, space = 0, xlab = "x", ylab = "Pr(X = x)", main = "Poi
 
 ```
 
-####
+#### this creates a smooth looking distribution
 
 ## Simulate 104 results from this distribution (i.e., 2 years of Saturday monitoring sessions).
-### 
+### Using rpois to generate 104 random numbers from a poisson distribution with lambda 15
 
 ```{r}
 
 x <- rpois(104, lambda=15)
 
-#ignore
-#set <- NULL  # sets up a dummy variable to hold our 10000 simulations
-#n <- 104
-#for (i in 1:104) {
-#    set[i] <- mean(sample(x, n, replace = TRUE))
-#}
-
-#set
-
 x
 
 ```
+#### returns a vector of numbers
 
 ## Plot the simulated results using hist() and use xlim() to set the horizontal limits to be from 0 to 30. How does your histogram compare to the shape of the probability mass function you plotted above?
-
-### applying hist() with an x range of 0-30 to "set", which we filled using the bootstrapping loop above
+### applying hist() with an x range of 0-30 to "x", which we filled with random poisson numbers above
 
 ```{r}
 
 hist(x, xlim=range(c(0:30)))
-
-
-
-#### This distribution is much narrower than the one made using the probability mass function. This happens because increasing the sample size or number of simulated values tightens the distribution and decreases variance/standard deviation because n is in the denominator of these equations.
 
 ```
 
 #### This distribution is much less smooth and symmetrical than the one made using the probability mass function. The probability mass function histogram is more "perfect" because it has an infinite sample size, as opposed to 104, and this tightens the distribution and decreases variance/standard deviation because n is in the denominator of these equations.
 
 # second homework problem
+
 ## Load in the dataset “zombies.csv” from my GitHub repo
 ### downloading zombies.csv from GitHub using curl, formatting using read.csv with commas as separation
 
