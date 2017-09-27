@@ -114,6 +114,8 @@ head(d)
 
 ```{r}
 
+#aggregate(d$Body_mass_female_mean ~ d$Family, FUN = "mean", na.rm = TRUE)
+
 h <- d$height
 
 mean(h)
@@ -242,25 +244,25 @@ hist(w)
 
 qqnorm(w, main = "Weight Normal Q-Q Plot")
 qqline(w, col = "gray")
-#not normal?
+#normal
 
 hist(a)
 
 qqnorm(a, main = "Age Normal Q-Q Plot")
 qqline(a, col = "gray")
-#normal?
+#normal
 
 hist(z)
 
 qqnorm(z, main = "Zombies Killed Normal Q-Q Plot")
 qqline(z, col = "gray")
-#def not normal
+#poisson 
 
 hist(y)
 
 qqnorm(y, main = "Education Normal Q-Q Plot")
 qqline(y, col = "gray")
-#def not normal
+#poisson
 
 ```
 ####
@@ -298,17 +300,131 @@ lower <- mean(h) + qnorm(0.05, mean = mean(h), sd = stdev) * pop_se
 ci <- c(lower, upper)
 ci
 
-#alternatively
-#upper <- mean(h) + qpois(0.95, mean = mean(h), sd = stdev) * pop_se
-#lower <- mean(h) + qpois(0.05, mean = mean(h), sd = stdev) * pop_se  
-#ci <- c(lower, upper)
-#ci
+####
 
-#alternatively
-#upper <- mean(h) + qbinom(0.95, mean = mean(h), sd = stdev) * pop_se
-#lower <- mean(h) + qbinom(0.05, mean = mean(h), sd = stdev) * pop_se  
-#ci <- c(lower, upper)
-#ci
+k <- 1  # number of samples
+n <- 30  # size of each sample
+s <- NULL  # dummy variable to hold each sample
+for (i in 1:k) {
+    s[[i]] <- sample(w, size = n, replace = FALSE)
+}
+
+m <- NULL
+for (i in 1:k) {
+    m[i] <- mean(s[[i]])
+}
+mean(m)  
+
+stdev <- NULL
+for (i in 1:k) {
+    stdev[i] <- sd(s[[i]])
+}
+sem <- stdev/sqrt(n)  # a vector of SEs estimated from each sample 
+
+sigma <- sqrt(sum((w - mean(w))^2)/length(w))
+
+pop_se <- sigma/sqrt(n)
+pop_se 
+
+upper <- mean(w) + qnorm(0.95, mean = mean(w), sd = stdev) * pop_se
+lower <- mean(w) + qnorm(0.05, mean = mean(w), sd = stdev) * pop_se  
+ci <- c(lower, upper)
+ci
+
+####
+
+k <- 1  # number of samples
+n <- 30  # size of each sample
+s <- NULL  # dummy variable to hold each sample
+for (i in 1:k) {
+    s[[i]] <- sample(a, size = n, replace = FALSE)
+}
+
+m <- NULL
+for (i in 1:k) {
+    m[i] <- mean(s[[i]])
+}
+mean(m)  
+
+stdev <- NULL
+for (i in 1:k) {
+    stdev[i] <- sd(s[[i]])
+}
+sem <- stdev/sqrt(n)  # a vector of SEs estimated from each sample 
+
+sigma <- sqrt(sum((a - mean(a))^2)/length(a))
+
+pop_se <- sigma/sqrt(n)
+pop_se 
+
+upper <- mean(a) + qnorm(0.95, mean = mean(a), sd = stdev) * pop_se
+lower <- mean(a) + qnorm(0.05, mean = mean(a), sd = stdev) * pop_se  
+ci <- c(lower, upper)
+ci
+
+####
+
+k <- 1  # number of samples
+n <- 30  # size of each sample
+s <- NULL  # dummy variable to hold each sample
+for (i in 1:k) {
+    s[[i]] <- sample(z, size = n, replace = FALSE)
+}
+
+m <- NULL
+for (i in 1:k) {
+    m[i] <- mean(s[[i]])
+}
+mean(m)  
+
+stdev <- NULL
+for (i in 1:k) {
+    stdev[i] <- sd(s[[i]])
+}
+sem <- stdev/sqrt(n)  # a vector of SEs estimated from each sample 
+
+sigma <- sqrt(sum((z - mean(z))^2)/length(z))
+
+pop_se <- sigma/sqrt(n)
+pop_se 
+
+upper <- mean(z) + qpois(0.95, lambda=mean(z), lower.tail = TRUE, log.p = FALSE) * pop_se
+lower <- mean(z) + qpois(0.05, lambda=mean(z), lower.tail = TRUE, log.p = FALSE) * pop_se  
+ci <- c(lower, upper)
+ci
+
+####
+
+
+k <- 1  # number of samples
+n <- 30  # size of each sample
+s <- NULL  # dummy variable to hold each sample
+for (i in 1:k) {
+    s[[i]] <- sample(y, size = n, replace = FALSE)
+}
+
+m <- NULL
+for (i in 1:k) {
+    m[i] <- mean(s[[i]])
+}
+mean(m)  
+
+stdev <- NULL
+for (i in 1:k) {
+    stdev[i] <- sd(s[[i]])
+}
+sem <- stdev/sqrt(n)  # a vector of SEs estimated from each sample 
+
+sigma <- sqrt(sum((y - mean(y))^2)/length(y))
+
+pop_se <- sigma/sqrt(n)
+pop_se 
+
+upper <- mean(y) + qpois(0.95, lambda=mean(y), lower.tail = TRUE, log.p = FALSE) * pop_se
+lower <- mean(y) + qpois(0.05, lambda=mean(y), lower.tail = TRUE, log.p = FALSE) * pop_se  
+ci <- c(lower, upper)
+ci
+
 
 
 ```
