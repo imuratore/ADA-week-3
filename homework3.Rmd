@@ -1,0 +1,344 @@
+---
+title: "homework3"
+author: "Isabella Muratore"
+date: "September 29, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# second homework problem (please ignore for now)
+
+## Load in the dataset “zombies.csv” from my GitHub repo
+### downloading zombies.csv from GitHub using curl, formatting using read.csv with commas as separation
+
+```{r}
+library(curl)
+f <- curl("https://raw.githubusercontent.com/fuzzyatelin/fuzzyatelin.github.io/master/AN597_Fall17/zombies.csv")
+
+d <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
+head(d)
+
+```
+## Calculate the population mean and standard deviation for each quantitative random variable (height, weight, age, number of zombies killed, and years of education). NOTE: You will not want to use the built in var() and  sd() commands as these are for samples.
+### using mean function to average the height variable
+
+```{r}
+
+#aggregate(d$Body_mass_female_mean ~ d$Family, FUN = "mean", na.rm = TRUE)
+
+h <- d$height
+
+mean(h)
+
+w <- d$weight
+
+mean(w)
+
+a <- d$age
+
+mean(a)
+
+z <- d$zombies_killed
+
+mean(z)
+
+y <- d$years_of_education
+
+mean(y)
+
+```
+####
+###
+
+```{r}
+pop_v <- function(x) {
+    sum((x - mean(x))^2)/(length(x))
+}
+
+
+```
+####
+###
+
+```{r}
+
+pop_sd <- function(x) {
+    sqrt(pop_v(x))
+}
+pop_sd(h)
+
+pop_sd(w)
+
+pop_sd(a)
+
+pop_sd(z)
+
+pop_sd(y)
+
+```
+## Use {ggplot} and make boxplots of each of these variables by gender.
+###
+```{r}
+library(ggplot2)
+
+p <- ggplot(data = d, aes(x = gender, y = h))
+p <- p + geom_boxplot()
+p <- p + theme(axis.text.x = element_text(angle = 90))
+p <- p + ylab("height")
+p
+
+p <- ggplot(data = d, aes(x = gender, y = w))
+p <- p + geom_boxplot()
+p <- p + theme(axis.text.x = element_text(angle = 90))
+p <- p + ylab("weight")
+p
+
+p <- ggplot(data = d, aes(x = gender, y = a))
+p <- p + geom_boxplot()
+p <- p + theme(axis.text.x = element_text(angle = 90))
+p <- p + ylab("age")
+p
+
+p <- ggplot(data = d, aes(x = gender, y = z))
+p <- p + geom_boxplot()
+p <- p + theme(axis.text.x = element_text(angle = 90))
+p <- p + ylab("zombies killed")
+p
+
+p <- ggplot(data = d, aes(x = gender, y = y))
+p <- p + geom_boxplot()
+p <- p + theme(axis.text.x = element_text(angle = 90))
+p <- p + ylab("years of education")
+p
+
+
+
+```
+
+##Use {ggplot} and make scatterplots of height and weight in relation to age. Do these variables seem to be related? In what way?
+###
+
+```{r}
+
+p <- ggplot(data = d, aes(x = age, y = height))  # first, we build a plot object
+p <- p + xlab("age") + ylab("height")  # then we modify the axis labels
+p <- p + geom_point()  # then we make a scatterplot
+p <- p + theme(legend.position = "bottom", legend.title = element_blank())  # then we modify the legend
+p  # and, finally, we plot the object
+
+p <- ggplot(data = d, aes(x = age, y = weight))  # first, we build a plot object
+p <- p + xlab("age") + ylab("weight")  # then we modify the axis labels
+p <- p + geom_point()  # then we make a scatterplot
+p <- p + theme(legend.position = "bottom", legend.title = element_blank())  # then we modify the legend
+p  # and, finally, we plot the object
+
+```
+
+#### Without quantifying correlation, I would say that both height and weight are positively correlated to age, with the correlation between weight and age appearing slightly less robust than that between height and age.
+
+## Using histograms and Q-Q plots, check whether the quantitative variables seem to be drawn from a normal distribution. Which seem to be and which do not (hint: not all are drawn from the normal distribution)? For those that are not, can you determine what common distribution they are drawn from?
+```{r}
+hist(h)
+
+qqnorm(h, main = "Height Normal Q-Q Plot")
+qqline(h, col = "gray")
+#normal
+
+hist(w)
+
+qqnorm(w, main = "Weight Normal Q-Q Plot")
+qqline(w, col = "gray")
+#normal
+
+hist(a)
+
+qqnorm(a, main = "Age Normal Q-Q Plot")
+qqline(a, col = "gray")
+#normal
+
+hist(z)
+
+qqnorm(z, main = "Zombies Killed Normal Q-Q Plot")
+qqline(z, col = "gray")
+#poisson 
+
+hist(y)
+
+qqnorm(y, main = "Education Normal Q-Q Plot")
+qqline(y, col = "gray")
+#poisson
+
+```
+####
+
+## Now use the sample() function to sample ONE subset of 30 zombies (without replacement) from this population and calculate the mean and sample standard deviation for each variable. Also estimate the standard error for each variable and construct the 95% confidence interval for each mean. Note that for the variables that are not drawn from the normal distribution, you will need to base your estimate of the CIs on some different distribution.
+###
+
+```{r}
+k <- 1  # number of samples
+n <- 30  # size of each sample
+s <- NULL  # dummy variable to hold each sample
+for (i in 1:k) {
+    s[[i]] <- sample(h, size = n, replace = FALSE)
+}
+
+m <- NULL
+for (i in 1:k) {
+    m[i] <- mean(s[[i]])
+}
+mean(m)  
+
+stdev <- NULL
+for (i in 1:k) {
+    stdev[i] <- sd(s[[i]])
+}
+sem <- stdev/sqrt(n)  # a vector of SEs estimated from each sample 
+
+upper <- mean(m) + qnorm(0.95, mean = mean(m), sd = stdev) * mean(sem)
+lower <- mean(m) + qnorm(0.05, mean = mean(m), sd = stdev) * mean(sem)
+ci <- c(lower, upper)
+ci
+
+####
+
+k <- 1  # number of samples
+n <- 30  # size of each sample
+s <- NULL  # dummy variable to hold each sample
+for (i in 1:k) {
+    s[[i]] <- sample(w, size = n, replace = FALSE)
+}
+
+m <- NULL
+for (i in 1:k) {
+    m[i] <- mean(s[[i]])
+}
+mean(m)  
+
+stdev <- NULL
+for (i in 1:k) {
+    stdev[i] <- sd(s[[i]])
+}
+sem <- stdev/sqrt(n)  # a vector of SEs estimated from each sample 
+
+upper <- mean(m) + qnorm(0.95, mean = mean(m), sd = stdev) * mean(sem)
+lower <- mean(m) + qnorm(0.05, mean = mean(m), sd = stdev) * mean(sem)  
+ci <- c(lower, upper)
+ci
+
+####
+
+k <- 1  # number of samples
+n <- 30  # size of each sample
+s <- NULL  # dummy variable to hold each sample
+for (i in 1:k) {
+    s[[i]] <- sample(a, size = n, replace = FALSE)
+}
+
+m <- NULL
+for (i in 1:k) {
+    m[i] <- mean(s[[i]])
+}
+mean(m)  
+
+stdev <- NULL
+for (i in 1:k) {
+    stdev[i] <- sd(s[[i]])
+}
+sem <- stdev/sqrt(n)  # a vector of SEs estimated from each sample 
+
+upper <- mean(m) + qnorm(0.95, mean = mean(m), sd = stdev) * mean(sem)
+lower <- mean(m) + qnorm(0.05, mean = mean(m), sd = stdev) * mean(sem)  
+ci <- c(lower, upper)
+ci
+
+####
+
+k <- 1  # number of samples
+n <- 30  # size of each sample
+s <- NULL  # dummy variable to hold each sample
+for (i in 1:k) {
+    s[[i]] <- sample(z, size = n, replace = FALSE)
+}
+
+m <- NULL
+for (i in 1:k) {
+    m[i] <- mean(s[[i]])
+}
+mean(m)  
+
+stdev <- NULL
+for (i in 1:k) {
+    stdev[i] <- sd(s[[i]])
+}
+sem <- stdev/sqrt(n)  # a vector of SEs estimated from each sample 
+
+upper <- mean(m) + qpois(0.95, lambda=mean(m), lower.tail = TRUE, log.p = FALSE) * mean(sem)
+lower <- mean(m) + qpois(0.05, lambda=mean(m), lower.tail = TRUE, log.p = FALSE) * mean(sem) 
+ci <- c(lower, upper)
+ci
+
+####
+
+
+k <- 1  # number of samples
+n <- 30  # size of each sample
+s <- NULL  # dummy variable to hold each sample
+for (i in 1:k) {
+    s[[i]] <- sample(y, size = n, replace = FALSE)
+}
+
+m <- NULL
+for (i in 1:k) {
+    m[i] <- mean(s[[i]])
+}
+mean(m)  
+
+stdev <- NULL
+for (i in 1:k) {
+    stdev[i] <- sd(s[[i]])
+}
+sem <- stdev/sqrt(n)  # a vector of SEs estimated from each sample 
+
+upper <- mean(m) + qpois(0.95, lambda=mean(m), lower.tail = TRUE, log.p = FALSE) * mean(sem)
+lower <- mean(m) + qpois(0.05, lambda=mean(m), lower.tail = TRUE, log.p = FALSE) * mean(sem)  
+ci <- c(lower, upper)
+ci
+
+
+
+```
+####
+
+## Now draw 99 more random samples of 30 zombies out and calculate the mean for each of the these samples. Together with the first sample you drew out, you now have a set of 100 means for each variable (each based on 30 observations), which constitutes a sampling distribution for each variable. What are the means and standard deviations of this distribution for each variable? How do the standard deviations compare to the standard errors estimated in [5]? What do these sampling distributions look like? Are they normally distributed? What about for those variables that you concluded were not originally drawn from a normal distribution?
+###
+
+```{r}
+k <- 99  # number of samples
+n <- 30  # size of each sample
+s <- NULL  # dummy variable to hold each sample
+for (i in 1:k) {
+    s[[i]] <- sample(h, size = n, replace = FALSE)
+}
+
+m <- NULL
+for (i in 1:k) {
+    m[i] <- mean(s[[i]])
+}
+mean(m)  
+
+stdev <- NULL
+for (i in 1:k) {
+    stdev[i] <- sd(s[[i]])
+}
+
+
+```
+####
+
+
+
+
+
