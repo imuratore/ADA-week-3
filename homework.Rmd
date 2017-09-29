@@ -25,11 +25,11 @@ ppois(8, lambda=15, lower=FALSE)
 #### returns ~0.96, so the answer is a ~96% probability of more than 8 assuming the mean is accurate
 
 ## What is the probability that she will hear no calls in a session?
-### using a poisson probability distribution to get the lower tail using 0 as the position along the distribution
+### using a poisson density distribution (since this is just for one specific value) to get the probability of hearing exactly 0 calls (you could also do this with ppois at position 0 capturing the lower tail)
 
 ```{r}
 
-ppois(0, lambda=15)
+dpois(0, lambda=15)
 
 ```
 
@@ -55,7 +55,7 @@ z <- dpois(0:30, lambda=15)
 
 x <- c(0:30)
 
-barplot(z, names.arg = x, space = 0, xlab = "x", ylab = "Pr(X = x)", main = "Poisson Mass Function")
+barplot(z, names.arg = x, space = 0, xlab = "x", ylab = "Pr(X = x)", main = "Poisson Mass Function Modeling Monkey Calls")
 
 ```
 
@@ -78,13 +78,13 @@ x
 
 ```{r}
 
-hist(x, xlim=range(c(0:30)))
+hist(x, xlim=range(c(0:30)), xlab=c(0:30), main="Poisson Mass Function Modeling Monkey Calls")
 
 ```
 
-#### This distribution is much less smooth and symmetrical than the one made using the probability mass function. The probability mass function histogram is more "perfect" because it has an infinite sample size, as opposed to 104, and this tightens the distribution and decreases variance/standard deviation because n is in the denominator of these equations.
+#### This distribution is much less smooth and symmetrical than the one made using the probability mass function. The probability mass function histogram is more "perfect" because it represents the entire infinitely divisible distribution, as opposed to showing 104 discrete elements from the distribution, and larger sample size tightens the distribution and decreases variance/standard deviation because n is in the denominator of these equations.
 
-# second homework problem
+# second homework problem (please ignore for now)
 
 ## Load in the dataset “zombies.csv” from my GitHub repo
 ### downloading zombies.csv from GitHub using curl, formatting using read.csv with commas as separation
@@ -132,15 +132,7 @@ mean(y)
 pop_v <- function(x) {
     sum((x - mean(x))^2)/(length(x))
 }
-pop_v(h)
 
-pop_v(w)
-
-pop_v(a)
-
-pop_v(z)
-
-pop_v(y)
 
 ```
 ####
@@ -217,7 +209,9 @@ p <- p + xlab("age") + ylab("weight")  # then we modify the axis labels
 p <- p + geom_point()  # then we make a scatterplot
 p <- p + theme(legend.position = "bottom", legend.title = element_blank())  # then we modify the legend
 p  # and, finally, we plot the object
+
 ```
+
 #### Without quantifying correlation, I would say that both height and weight are positively correlated to age, with the correlation between weight and age appearing slightly less robust than that between height and age.
 
 ## Using histograms and Q-Q plots, check whether the quantitative variables seem to be drawn from a normal distribution. Which seem to be and which do not (hint: not all are drawn from the normal distribution)? For those that are not, can you determine what common distribution they are drawn from?
@@ -278,13 +272,8 @@ for (i in 1:k) {
 }
 sem <- stdev/sqrt(n)  # a vector of SEs estimated from each sample 
 
-sigma <- sqrt(sum((h - mean(h))^2)/length(h))
-
-pop_se <- sigma/sqrt(n)
-pop_se 
-
-upper <- mean(h) + qnorm(0.95, mean = mean(h), sd = stdev) * pop_se
-lower <- mean(h) + qnorm(0.05, mean = mean(h), sd = stdev) * pop_se  
+upper <- mean(m) + qnorm(0.95, mean = mean(m), sd = stdev) * mean(sem)
+lower <- mean(m) + qnorm(0.05, mean = mean(m), sd = stdev) * mean(sem)
 ci <- c(lower, upper)
 ci
 
@@ -309,13 +298,8 @@ for (i in 1:k) {
 }
 sem <- stdev/sqrt(n)  # a vector of SEs estimated from each sample 
 
-sigma <- sqrt(sum((w - mean(w))^2)/length(w))
-
-pop_se <- sigma/sqrt(n)
-pop_se 
-
-upper <- mean(w) + qnorm(0.95, mean = mean(w), sd = stdev) * pop_se
-lower <- mean(w) + qnorm(0.05, mean = mean(w), sd = stdev) * pop_se  
+upper <- mean(m) + qnorm(0.95, mean = mean(m), sd = stdev) * mean(sem)
+lower <- mean(m) + qnorm(0.05, mean = mean(m), sd = stdev) * mean(sem)  
 ci <- c(lower, upper)
 ci
 
@@ -340,13 +324,8 @@ for (i in 1:k) {
 }
 sem <- stdev/sqrt(n)  # a vector of SEs estimated from each sample 
 
-sigma <- sqrt(sum((a - mean(a))^2)/length(a))
-
-pop_se <- sigma/sqrt(n)
-pop_se 
-
-upper <- mean(a) + qnorm(0.95, mean = mean(a), sd = stdev) * pop_se
-lower <- mean(a) + qnorm(0.05, mean = mean(a), sd = stdev) * pop_se  
+upper <- mean(m) + qnorm(0.95, mean = mean(m), sd = stdev) * mean(sem)
+lower <- mean(m) + qnorm(0.05, mean = mean(m), sd = stdev) * mean(sem)  
 ci <- c(lower, upper)
 ci
 
@@ -371,13 +350,8 @@ for (i in 1:k) {
 }
 sem <- stdev/sqrt(n)  # a vector of SEs estimated from each sample 
 
-sigma <- sqrt(sum((z - mean(z))^2)/length(z))
-
-pop_se <- sigma/sqrt(n)
-pop_se 
-
-upper <- mean(z) + qpois(0.95, lambda=mean(z), lower.tail = TRUE, log.p = FALSE) * pop_se
-lower <- mean(z) + qpois(0.05, lambda=mean(z), lower.tail = TRUE, log.p = FALSE) * pop_se  
+upper <- mean(m) + qpois(0.95, lambda=mean(m), lower.tail = TRUE, log.p = FALSE) * mean(sem)
+lower <- mean(m) + qpois(0.05, lambda=mean(m), lower.tail = TRUE, log.p = FALSE) * mean(sem) 
 ci <- c(lower, upper)
 ci
 
@@ -403,13 +377,8 @@ for (i in 1:k) {
 }
 sem <- stdev/sqrt(n)  # a vector of SEs estimated from each sample 
 
-sigma <- sqrt(sum((y - mean(y))^2)/length(y))
-
-pop_se <- sigma/sqrt(n)
-pop_se 
-
-upper <- mean(y) + qpois(0.95, lambda=mean(y), lower.tail = TRUE, log.p = FALSE) * pop_se
-lower <- mean(y) + qpois(0.05, lambda=mean(y), lower.tail = TRUE, log.p = FALSE) * pop_se  
+upper <- mean(m) + qpois(0.95, lambda=mean(m), lower.tail = TRUE, log.p = FALSE) * mean(sem)
+lower <- mean(m) + qpois(0.05, lambda=mean(m), lower.tail = TRUE, log.p = FALSE) * mean(sem)  
 ci <- c(lower, upper)
 ci
 
