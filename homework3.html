@@ -124,8 +124,8 @@ $(document).ready(function () {
 </div>
 
 
-<div id="second-homework-problem-please-ignore-for-now" class="section level1">
-<h1>second homework problem (please ignore for now)</h1>
+<div id="second-homework-problem" class="section level1">
+<h1>second homework problem</h1>
 <div id="load-in-the-dataset-zombies.csv-from-my-github-repo" class="section level2">
 <h2>Load in the dataset “zombies.csv” from my GitHub repo</h2>
 <div id="downloading-zombies.csv-from-github-using-curl-formatting-using-read.csv-with-commas-as-separation" class="section level3">
@@ -322,18 +322,18 @@ for (i in 1:k) {
     m[i] &lt;- mean(s[[i]])
 }
 mean(m)  </code></pre>
-<pre><code>## [1] 68.49083</code></pre>
+<pre><code>## [1] 67.58929</code></pre>
 <pre class="r"><code>stdev &lt;- NULL
 for (i in 1:k) {
     stdev[i] &lt;- sd(s[[i]])
 }
 sem &lt;- stdev/sqrt(n)  # a vector of SEs estimated from each sample 
 
-upper &lt;- mean(m) + qnorm(0.95, mean = mean(m), sd = stdev) * mean(sem)
-lower &lt;- mean(m) + qnorm(0.05, mean = mean(m), sd = stdev) * mean(sem)
+upper &lt;- mean(m) + qnorm(0.95, mean = 0, sd = 1) * mean(sem)
+lower &lt;- mean(m) + qnorm(0.05, mean = 0, sd = 1) * mean(sem)
 ci &lt;- c(lower, upper)
 ci</code></pre>
-<pre><code>## [1] 112.2638 121.2034</code></pre>
+<pre><code>## [1] 66.11220 69.06638</code></pre>
 <pre class="r"><code>####
 
 k &lt;- 1  # number of samples
@@ -348,18 +348,18 @@ for (i in 1:k) {
     m[i] &lt;- mean(s[[i]])
 }
 mean(m)  </code></pre>
-<pre><code>## [1] 140.6527</code></pre>
+<pre><code>## [1] 142.3845</code></pre>
 <pre class="r"><code>stdev &lt;- NULL
 for (i in 1:k) {
     stdev[i] &lt;- sd(s[[i]])
 }
 sem &lt;- stdev/sqrt(n)  # a vector of SEs estimated from each sample 
 
-upper &lt;- mean(m) + qnorm(0.95, mean = mean(m), sd = stdev) * mean(sem)
-lower &lt;- mean(m) + qnorm(0.05, mean = mean(m), sd = stdev) * mean(sem)  
+upper &lt;- mean(m) + qnorm(0.95, mean = 0, sd = 1) * mean(sem)
+lower &lt;- mean(m) + qnorm(0.05, mean = 0, sd = 1) * mean(sem)  
 ci &lt;- c(lower, upper)
 ci</code></pre>
-<pre><code>## [1] 475.6351 630.5786</code></pre>
+<pre><code>## [1] 137.6120 147.1571</code></pre>
 <pre class="r"><code>####
 
 k &lt;- 1  # number of samples
@@ -374,18 +374,18 @@ for (i in 1:k) {
     m[i] &lt;- mean(s[[i]])
 }
 mean(m)  </code></pre>
-<pre><code>## [1] 19.78841</code></pre>
+<pre><code>## [1] 20.7423</code></pre>
 <pre class="r"><code>stdev &lt;- NULL
 for (i in 1:k) {
     stdev[i] &lt;- sd(s[[i]])
 }
 sem &lt;- stdev/sqrt(n)  # a vector of SEs estimated from each sample 
 
-upper &lt;- mean(m) + qnorm(0.95, mean = mean(m), sd = stdev) * mean(sem)
-lower &lt;- mean(m) + qnorm(0.05, mean = mean(m), sd = stdev) * mean(sem)  
+upper &lt;- mean(m) + qnorm(0.95, mean = 0, sd = 1) * mean(sem)
+lower &lt;- mean(m) + qnorm(0.05, mean = 0, sd = 1) * mean(sem)  
 ci &lt;- c(lower, upper)
 ci</code></pre>
-<pre><code>## [1] 27.30240 31.59777</code></pre>
+<pre><code>## [1] 19.84423 21.64037</code></pre>
 <pre class="r"><code>####
 
 k &lt;- 1  # number of samples
@@ -400,18 +400,18 @@ for (i in 1:k) {
     m[i] &lt;- mean(s[[i]])
 }
 mean(m)  </code></pre>
-<pre><code>## [1] 3.066667</code></pre>
+<pre><code>## [1] 2.666667</code></pre>
 <pre class="r"><code>stdev &lt;- NULL
 for (i in 1:k) {
     stdev[i] &lt;- sd(s[[i]])
 }
 sem &lt;- stdev/sqrt(n)  # a vector of SEs estimated from each sample 
 
-upper &lt;- mean(m) + qpois(0.95, lambda=mean(m), lower.tail = TRUE, log.p = FALSE) * mean(sem)
-lower &lt;- mean(m) + qpois(0.05, lambda=mean(m), lower.tail = TRUE, log.p = FALSE) * mean(sem) 
+upper &lt;- mean(m) + qpois(0.95, lambda=0, lower.tail = TRUE, log.p = FALSE) * mean(sem)
+lower &lt;- mean(m) + qpois(0.05, lambda=0, lower.tail = TRUE, log.p = FALSE) * mean(sem) 
 ci &lt;- c(lower, upper)
 ci</code></pre>
-<pre><code>## [1] 3.391619 5.016379</code></pre>
+<pre><code>## [1] 2.666667 2.666667</code></pre>
 <pre class="r"><code>####
 
 
@@ -427,18 +427,18 @@ for (i in 1:k) {
     m[i] &lt;- mean(s[[i]])
 }
 mean(m)  </code></pre>
-<pre><code>## [1] 3</code></pre>
+<pre><code>## [1] 3.333333</code></pre>
 <pre class="r"><code>stdev &lt;- NULL
 for (i in 1:k) {
     stdev[i] &lt;- sd(s[[i]])
 }
 sem &lt;- stdev/sqrt(n)  # a vector of SEs estimated from each sample 
 
-upper &lt;- mean(m) + qpois(0.95, lambda=mean(m), lower.tail = TRUE, log.p = FALSE) * mean(sem)
-lower &lt;- mean(m) + qpois(0.05, lambda=mean(m), lower.tail = TRUE, log.p = FALSE) * mean(sem)  
+upper &lt;- mean(m) + qpois(0.95, lambda=0, lower.tail = TRUE, log.p = FALSE) * mean(sem)
+lower &lt;- mean(m) + qpois(0.05, lambda=0, lower.tail = TRUE, log.p = FALSE) * mean(sem)  
 ci &lt;- c(lower, upper)
 ci</code></pre>
-<pre><code>## [1] 3.392458 5.354746</code></pre>
+<pre><code>## [1] 3.333333 3.333333</code></pre>
 <div id="section-8" class="section level4">
 <h4></h4>
 </div>
@@ -460,7 +460,7 @@ for (i in 1:k) {
     m[i] &lt;- mean(s[[i]])
 }
 mean(m)  </code></pre>
-<pre><code>## [1] 67.6194</code></pre>
+<pre><code>## [1] 67.62441</code></pre>
 <pre class="r"><code>stdev &lt;- NULL
 for (i in 1:k) {
     stdev[i] &lt;- sd(s[[i]])

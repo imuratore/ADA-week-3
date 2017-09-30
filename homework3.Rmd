@@ -9,7 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# second homework problem (please ignore for now)
+# second homework problem
 
 ## Load in the dataset “zombies.csv” from my GitHub repo
 ### downloading zombies.csv from GitHub using curl, formatting using read.csv with commas as separation
@@ -197,8 +197,8 @@ for (i in 1:k) {
 }
 sem <- stdev/sqrt(n)  # a vector of SEs estimated from each sample 
 
-upper <- mean(m) + qnorm(0.95, mean = mean(m), sd = stdev) * mean(sem)
-lower <- mean(m) + qnorm(0.05, mean = mean(m), sd = stdev) * mean(sem)
+upper <- mean(m) + qnorm(0.95, mean = 0, sd = 1) * mean(sem)
+lower <- mean(m) + qnorm(0.05, mean = 0, sd = 1) * mean(sem)
 ci <- c(lower, upper)
 ci
 
@@ -223,8 +223,8 @@ for (i in 1:k) {
 }
 sem <- stdev/sqrt(n)  # a vector of SEs estimated from each sample 
 
-upper <- mean(m) + qnorm(0.95, mean = mean(m), sd = stdev) * mean(sem)
-lower <- mean(m) + qnorm(0.05, mean = mean(m), sd = stdev) * mean(sem)  
+upper <- mean(m) + qnorm(0.95, mean = 0, sd = 1) * mean(sem)
+lower <- mean(m) + qnorm(0.05, mean = 0, sd = 1) * mean(sem)  
 ci <- c(lower, upper)
 ci
 
@@ -249,8 +249,8 @@ for (i in 1:k) {
 }
 sem <- stdev/sqrt(n)  # a vector of SEs estimated from each sample 
 
-upper <- mean(m) + qnorm(0.95, mean = mean(m), sd = stdev) * mean(sem)
-lower <- mean(m) + qnorm(0.05, mean = mean(m), sd = stdev) * mean(sem)  
+upper <- mean(m) + qnorm(0.95, mean = 0, sd = 1) * mean(sem)
+lower <- mean(m) + qnorm(0.05, mean = 0, sd = 1) * mean(sem)  
 ci <- c(lower, upper)
 ci
 
@@ -275,8 +275,8 @@ for (i in 1:k) {
 }
 sem <- stdev/sqrt(n)  # a vector of SEs estimated from each sample 
 
-upper <- mean(m) + qpois(0.95, lambda=mean(m), lower.tail = TRUE, log.p = FALSE) * mean(sem)
-lower <- mean(m) + qpois(0.05, lambda=mean(m), lower.tail = TRUE, log.p = FALSE) * mean(sem) 
+upper <- mean(m) + qpois(0.95, lambda=0, lower.tail = TRUE, log.p = FALSE) * mean(sem)
+lower <- mean(m) + qpois(0.05, lambda=0, lower.tail = TRUE, log.p = FALSE) * mean(sem) 
 ci <- c(lower, upper)
 ci
 
@@ -302,8 +302,8 @@ for (i in 1:k) {
 }
 sem <- stdev/sqrt(n)  # a vector of SEs estimated from each sample 
 
-upper <- mean(m) + qpois(0.95, lambda=mean(m), lower.tail = TRUE, log.p = FALSE) * mean(sem)
-lower <- mean(m) + qpois(0.05, lambda=mean(m), lower.tail = TRUE, log.p = FALSE) * mean(sem)  
+upper <- mean(m) + qpois(0.95, lambda=0, lower.tail = TRUE, log.p = FALSE) * mean(sem)
+lower <- mean(m) + qpois(0.05, lambda=0, lower.tail = TRUE, log.p = FALSE) * mean(sem)  
 ci <- c(lower, upper)
 ci
 
