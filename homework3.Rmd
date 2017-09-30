@@ -335,12 +335,103 @@ for (i in 1:k) {
     m[i] <- mean(s[[i]])
 }
 mean(m)  
+hist(m, main = "Height Sample Histogram")
+qqnorm(m, main = "Height Sample Normal Q-Q Plot")
+qqline(m, col = "gray")
 
 stdev <- NULL
 for (i in 1:k) {
     stdev[i] <- sd(s[[i]])
 }
+mean(stdev)
 
+k <- 99  # number of samples
+n <- 30  # size of each sample
+s <- NULL  # dummy variable to hold each sample
+for (i in 1:k) {
+    s[[i]] <- sample(w, size = n, replace = FALSE)
+}
+
+m <- NULL
+for (i in 1:k) {
+    m[i] <- mean(s[[i]])
+}
+mean(m)  
+hist(m, main = "Weight Sample Histogram")
+qqnorm(m, main = "Weight Sample Normal Q-Q Plot")
+qqline(m, col = "gray")
+
+stdev <- NULL
+for (i in 1:k) {
+    stdev[i] <- sd(s[[i]])
+}
+mean(stdev)
+
+k <- 99  # number of samples
+n <- 30  # size of each sample
+s <- NULL  # dummy variable to hold each sample
+for (i in 1:k) {
+    s[[i]] <- sample(a, size = n, replace = FALSE)
+}
+
+m <- NULL
+for (i in 1:k) {
+    m[i] <- mean(s[[i]])
+}
+mean(m)  
+hist(m, main = "Age Sample Histogram")
+qqnorm(m, main = "Age Sample Normal Q-Q Plot")
+qqline(m, col = "gray")
+
+stdev <- NULL
+for (i in 1:k) {
+    stdev[i] <- sd(s[[i]])
+}
+mean(stdev)
+
+k <- 99  # number of samples
+n <- 30  # size of each sample
+s <- NULL  # dummy variable to hold each sample
+for (i in 1:k) {
+    s[[i]] <- sample(z, size = n, replace = FALSE)
+}
+
+m <- NULL
+for (i in 1:k) {
+    m[i] <- mean(s[[i]])
+}
+mean(m)  
+hist(m, main = "Zombies Killed Sample Histogram")
+qqnorm(m, main = "Zombies Killed Sample Normal Q-Q Plot")
+qqline(m, col = "gray")
+
+stdev <- NULL
+for (i in 1:k) {
+    stdev[i] <- sd(s[[i]])
+} 
+mean(stdev)
+
+k <- 99  # number of samples
+n <- 30  # size of each sample
+s <- NULL  # dummy variable to hold each sample
+for (i in 1:k) {
+    s[[i]] <- sample(y, size = n, replace = FALSE)
+}
+
+m <- NULL
+for (i in 1:k) {
+    m[i] <- mean(s[[i]])
+}
+mean(m)  
+hist(m, main = "Education Sample Histogram")
+qqnorm(m, main = "Education Sample Normal Q-Q Plot")
+qqline(m, col = "gray")
+
+stdev <- NULL
+for (i in 1:k) {
+    stdev[i] <- sd(s[[i]])
+}
+mean(stdev)
 
 ```
 ####
