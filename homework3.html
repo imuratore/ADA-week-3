@@ -322,7 +322,7 @@ for (i in 1:k) {
     m[i] &lt;- mean(s[[i]])
 }
 mean(m)  </code></pre>
-<pre><code>## [1] 67.58929</code></pre>
+<pre><code>## [1] 68.31892</code></pre>
 <pre class="r"><code>stdev &lt;- NULL
 for (i in 1:k) {
     stdev[i] &lt;- sd(s[[i]])
@@ -333,7 +333,7 @@ upper &lt;- mean(m) + qnorm(0.95, mean = 0, sd = 1) * mean(sem)
 lower &lt;- mean(m) + qnorm(0.05, mean = 0, sd = 1) * mean(sem)
 ci &lt;- c(lower, upper)
 ci</code></pre>
-<pre><code>## [1] 66.11220 69.06638</code></pre>
+<pre><code>## [1] 66.94660 69.69124</code></pre>
 <pre class="r"><code>####
 
 k &lt;- 1  # number of samples
@@ -348,7 +348,7 @@ for (i in 1:k) {
     m[i] &lt;- mean(s[[i]])
 }
 mean(m)  </code></pre>
-<pre><code>## [1] 142.3845</code></pre>
+<pre><code>## [1] 142.4021</code></pre>
 <pre class="r"><code>stdev &lt;- NULL
 for (i in 1:k) {
     stdev[i] &lt;- sd(s[[i]])
@@ -359,7 +359,7 @@ upper &lt;- mean(m) + qnorm(0.95, mean = 0, sd = 1) * mean(sem)
 lower &lt;- mean(m) + qnorm(0.05, mean = 0, sd = 1) * mean(sem)  
 ci &lt;- c(lower, upper)
 ci</code></pre>
-<pre><code>## [1] 137.6120 147.1571</code></pre>
+<pre><code>## [1] 136.4548 148.3495</code></pre>
 <pre class="r"><code>####
 
 k &lt;- 1  # number of samples
@@ -374,7 +374,7 @@ for (i in 1:k) {
     m[i] &lt;- mean(s[[i]])
 }
 mean(m)  </code></pre>
-<pre><code>## [1] 20.7423</code></pre>
+<pre><code>## [1] 19.97248</code></pre>
 <pre class="r"><code>stdev &lt;- NULL
 for (i in 1:k) {
     stdev[i] &lt;- sd(s[[i]])
@@ -385,7 +385,7 @@ upper &lt;- mean(m) + qnorm(0.95, mean = 0, sd = 1) * mean(sem)
 lower &lt;- mean(m) + qnorm(0.05, mean = 0, sd = 1) * mean(sem)  
 ci &lt;- c(lower, upper)
 ci</code></pre>
-<pre><code>## [1] 19.84423 21.64037</code></pre>
+<pre><code>## [1] 19.17227 20.77268</code></pre>
 <pre class="r"><code>####
 
 k &lt;- 1  # number of samples
@@ -400,18 +400,21 @@ for (i in 1:k) {
     m[i] &lt;- mean(s[[i]])
 }
 mean(m)  </code></pre>
-<pre><code>## [1] 2.666667</code></pre>
+<pre><code>## [1] 3.266667</code></pre>
 <pre class="r"><code>stdev &lt;- NULL
 for (i in 1:k) {
     stdev[i] &lt;- sd(s[[i]])
 }
 sem &lt;- stdev/sqrt(n)  # a vector of SEs estimated from each sample 
 
-upper &lt;- mean(m) + qpois(0.95, lambda=0, lower.tail = TRUE, log.p = FALSE) * mean(sem)
-lower &lt;- mean(m) + qpois(0.05, lambda=0, lower.tail = TRUE, log.p = FALSE) * mean(sem) 
+#upper &lt;- mean(m) + qpois(0.95, lambda=mean(m), lower.tail = #TRUE, log.p = FALSE) * mean(sem)
+#lower &lt;- mean(m) + qpois(0.05, lambda=mean(m), lower.tail = #TRUE, log.p = FALSE) * mean(sem) 
+
+upper &lt;- mean(m)+1.96*sqrt(mean(m)/n)
+lower &lt;- mean(m)-1.96*sqrt(mean(m)/n)
 ci &lt;- c(lower, upper)
 ci</code></pre>
-<pre><code>## [1] 2.666667 2.666667</code></pre>
+<pre><code>## [1] 2.619900 3.913434</code></pre>
 <pre class="r"><code>####
 
 
@@ -427,18 +430,22 @@ for (i in 1:k) {
     m[i] &lt;- mean(s[[i]])
 }
 mean(m)  </code></pre>
-<pre><code>## [1] 3.333333</code></pre>
+<pre><code>## [1] 2.3</code></pre>
 <pre class="r"><code>stdev &lt;- NULL
 for (i in 1:k) {
     stdev[i] &lt;- sd(s[[i]])
 }
 sem &lt;- stdev/sqrt(n)  # a vector of SEs estimated from each sample 
 
-upper &lt;- mean(m) + qpois(0.95, lambda=0, lower.tail = TRUE, log.p = FALSE) * mean(sem)
-lower &lt;- mean(m) + qpois(0.05, lambda=0, lower.tail = TRUE, log.p = FALSE) * mean(sem)  
+#upper &lt;- mean(m) + qpois(0.95, lambda=mean(m), lower.tail = #TRUE, log.p = FALSE) * mean(sem)
+#lower &lt;- mean(m) + qpois(0.05, lambda=mean(m), lower.tail = #TRUE, log.p = FALSE) * mean(sem)  
+
+upper &lt;- mean(m)+1.96*sqrt(mean(m)/n)
+lower &lt;- mean(m)-1.96*sqrt(mean(m)/n)
+
 ci &lt;- c(lower, upper)
 ci</code></pre>
-<pre><code>## [1] 3.333333 3.333333</code></pre>
+<pre><code>## [1] 1.757301 2.842699</code></pre>
 <div id="section-8" class="section level4">
 <h4></h4>
 </div>
@@ -460,7 +467,7 @@ for (i in 1:k) {
     m[i] &lt;- mean(s[[i]])
 }
 mean(m)  </code></pre>
-<pre><code>## [1] 67.62441</code></pre>
+<pre><code>## [1] 67.69549</code></pre>
 <pre class="r"><code>stdev &lt;- NULL
 for (i in 1:k) {
     stdev[i] &lt;- sd(s[[i]])

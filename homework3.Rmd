@@ -275,8 +275,11 @@ for (i in 1:k) {
 }
 sem <- stdev/sqrt(n)  # a vector of SEs estimated from each sample 
 
-upper <- mean(m) + qpois(0.95, lambda=0, lower.tail = TRUE, log.p = FALSE) * mean(sem)
-lower <- mean(m) + qpois(0.05, lambda=0, lower.tail = TRUE, log.p = FALSE) * mean(sem) 
+#upper <- mean(m) + qpois(0.95, lambda=mean(m), lower.tail = #TRUE, log.p = FALSE) * mean(sem)
+#lower <- mean(m) + qpois(0.05, lambda=mean(m), lower.tail = #TRUE, log.p = FALSE) * mean(sem) 
+
+upper <- mean(m)+1.96*sqrt(mean(m)/n)
+lower <- mean(m)-1.96*sqrt(mean(m)/n)
 ci <- c(lower, upper)
 ci
 
@@ -302,8 +305,12 @@ for (i in 1:k) {
 }
 sem <- stdev/sqrt(n)  # a vector of SEs estimated from each sample 
 
-upper <- mean(m) + qpois(0.95, lambda=0, lower.tail = TRUE, log.p = FALSE) * mean(sem)
-lower <- mean(m) + qpois(0.05, lambda=0, lower.tail = TRUE, log.p = FALSE) * mean(sem)  
+#upper <- mean(m) + qpois(0.95, lambda=mean(m), lower.tail = #TRUE, log.p = FALSE) * mean(sem)
+#lower <- mean(m) + qpois(0.05, lambda=mean(m), lower.tail = #TRUE, log.p = FALSE) * mean(sem)  
+
+upper <- mean(m)+1.96*sqrt(mean(m)/n)
+lower <- mean(m)-1.96*sqrt(mean(m)/n)
+
 ci <- c(lower, upper)
 ci
 
