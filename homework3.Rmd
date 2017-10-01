@@ -23,11 +23,9 @@ head(d)
 
 ```
 ## Calculate the population mean and standard deviation for each quantitative random variable (height, weight, age, number of zombies killed, and years of education). NOTE: You will not want to use the built in var() and  sd() commands as these are for samples.
-### using mean function to average the height variable
+### using mean function to average each of the variables from the df
 
 ```{r}
-
-#aggregate(d$Body_mass_female_mean ~ d$Family, FUN = "mean", na.rm = TRUE)
 
 h <- d$height
 
@@ -50,8 +48,9 @@ y <- d$years_of_education
 mean(y)
 
 ```
-####
-###
+#### means for height, weight, age, zombies killed, years of education
+
+### a function for population variance summing the average deviation from the mean
 
 ```{r}
 pop_v <- function(x) {
@@ -60,8 +59,8 @@ pop_v <- function(x) {
 
 
 ```
-####
-###
+
+### a function for taking the square root of population variance to generate population standard deviation, calculating standard deviation for each of the variables from the df
 
 ```{r}
 
@@ -175,7 +174,7 @@ qqline(y, col = "gray")
 ####
 
 ## Now use the sample() function to sample ONE subset of 30 zombies (without replacement) from this population and calculate the mean and sample standard deviation for each variable. Also estimate the standard error for each variable and construct the 95% confidence interval for each mean. Note that for the variables that are not drawn from the normal distribution, you will need to base your estimate of the CIs on some different distribution.
-###
+### For each variable I am creating a sample "s" that is a vector of one sample of thirty values for height, or weight, or age, etc. drawn without replacement from the original population.  
 
 ```{r}
 k <- 1  # number of samples
@@ -184,30 +183,35 @@ s <- NULL  # dummy variable to hold each sample
 for (i in 1:k) {
     s[[i]] <- sample(h, size = n, replace = FALSE)
 }
+```
+```{r}
 
 m <- NULL
 for (i in 1:k) {
     m[i] <- mean(s[[i]])
 }
 mean(m)  
-
+```
+```{r}
 stdev <- NULL
 for (i in 1:k) {
     stdev[i] <- sd(s[[i]])
 }
 sem <- stdev/sqrt(n)  # a vector of SEs estimated from each sample 
-
+```
+```{r}
 upper <- mean(m) + qnorm(0.95, mean = 0, sd = 1) * mean(sem)
 lower <- mean(m) + qnorm(0.05, mean = 0, sd = 1) * mean(sem)
 ci <- c(lower, upper)
 ci
-
-####
-
+```
+#### Now repeating this process for the other variables that have normal distributions
+```{r}
 k <- 1  # number of samples
 n <- 30  # size of each sample
 s <- NULL  # dummy variable to hold each sample
 for (i in 1:k) {
+  #for weight
     s[[i]] <- sample(w, size = n, replace = FALSE)
 }
 
@@ -234,6 +238,7 @@ k <- 1  # number of samples
 n <- 30  # size of each sample
 s <- NULL  # dummy variable to hold each sample
 for (i in 1:k) {
+  #for age
     s[[i]] <- sample(a, size = n, replace = FALSE)
 }
 
@@ -260,6 +265,7 @@ k <- 1  # number of samples
 n <- 30  # size of each sample
 s <- NULL  # dummy variable to hold each sample
 for (i in 1:k) {
+  # for zombies killed
     s[[i]] <- sample(z, size = n, replace = FALSE)
 }
 
@@ -283,13 +289,16 @@ lower <- mean(m)-1.96*sqrt(mean(m)/n)
 ci <- c(lower, upper)
 ci
 
-####
+```
+#### Now using the same tools to sample from the remaining two variables and obtain means and standard deviations, but using a different formula to get poisson-based confidence intervals. The upper bound is obtained by adding the product of 1.96 and the square root of the mean over n to the mean; the lower bound is obtained by subtracting this value from the mean. 
 
+```{r}
 
 k <- 1  # number of samples
 n <- 30  # size of each sample
 s <- NULL  # dummy variable to hold each sample
 for (i in 1:k) {
+  # for years of education
     s[[i]] <- sample(y, size = n, replace = FALSE)
 }
 
@@ -434,7 +443,7 @@ for (i in 1:k) {
 mean(stdev)
 
 ```
-####
+#### Interestingly, both of the "poisson distributed" variables (zombies killed and years of education) appear fairly normally distributed based on the histograms and qqplots generated from random samples of their values. 
 
 
 
