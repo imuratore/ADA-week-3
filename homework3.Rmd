@@ -290,7 +290,7 @@ ci <- c(lower, upper)
 ci
 
 ```
-#### Now using the same tools to sample from the remaining two variables and obtain means and standard deviations, but using a different formula to get poisson-based confidence intervals. The upper bound is obtained by adding the product of 1.96 and the square root of the mean over n to the mean; the lower bound is obtained by subtracting this value from the mean. 
+#### Now using the same tools to sample from the remaining two variables and obtain means and standard deviations, but using a different formula to get poisson-based confidence intervals. The upper bound is obtained by adding the product of 1.96 and the square root of lambda over n to lambda; the lower bound is obtained by subtracting this value from lambda. 
 
 ```{r}
 
