@@ -443,7 +443,7 @@ for (i in 1:k) {
 mean(stdev)
 
 ```
-#### Interestingly, both of the "poisson distributed" variables (zombies killed and years of education) appear fairly normally distributed based on the histograms and qqplots generated from random samples of their values. 
+#### Interestingly, both of the "poisson distributed" variables (zombies killed and years of education) appear fairly normally distributed based on the histograms and qqplots generated from random samples of their values. This is likely due to the central limit theorem which states, according to Module 9, "the distribution of averages (or sums or other summary statistics…) of iid (independent and identically distributed) random variables becomes normal as the sample size increases... no matter what kind of probability distribution characterizes the initial population"
 
 
 
