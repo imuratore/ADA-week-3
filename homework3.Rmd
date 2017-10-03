@@ -79,7 +79,8 @@ pop_sd(y)
 
 ```
 ## Use {ggplot} and make boxplots of each of these variables by gender.
-###
+### Using ggplot to plot each variable against gender, by first defining the data set and x and y sources, then adding labels, and visualization. 
+
 ```{r}
 library(ggplot2)
 
@@ -118,7 +119,8 @@ p
 ```
 
 ##Use {ggplot} and make scatterplots of height and weight in relation to age. Do these variables seem to be related? In what way?
-###
+
+### Using ggplot to plot height against age and then weight against age, by first defining the data set and x and y sources, then adding labels, visualization, and a legend. 
 
 ```{r}
 
@@ -139,6 +141,7 @@ p  # and, finally, we plot the object
 #### Without quantifying correlation, I would say that both height and weight are positively correlated to age, with the correlation between weight and age appearing slightly less robust than that between height and age.
 
 ## Using histograms and Q-Q plots, check whether the quantitative variables seem to be drawn from a normal distribution. Which seem to be and which do not (hint: not all are drawn from the normal distribution)? For those that are not, can you determine what common distribution they are drawn from?
+### using hist() and qqnorm() on each variable. Hist should produce a smooth and symmetrical bell curve to suggest normality, qqnorm should show points fitted to the qqline to suggest normality.
 ```{r}
 hist(h)
 
@@ -157,6 +160,11 @@ hist(a)
 qqnorm(a, main = "Age Normal Q-Q Plot")
 qqline(a, col = "gray")
 #normal
+```
+
+#### It seems that Zombies killed and Years of education are not normal based on the qqline stack-like results below. Also, these are count data so poisson is the most likely distribution for these two. The rest look normal.
+
+```{r}
 
 hist(z)
 
@@ -171,10 +179,9 @@ qqline(y, col = "gray")
 #poisson
 
 ```
-####
 
 ## Now use the sample() function to sample ONE subset of 30 zombies (without replacement) from this population and calculate the mean and sample standard deviation for each variable. Also estimate the standard error for each variable and construct the 95% confidence interval for each mean. Note that for the variables that are not drawn from the normal distribution, you will need to base your estimate of the CIs on some different distribution.
-### For each variable I am creating a sample "s" that is a vector of one sample of thirty values for height, or weight, or age, etc. drawn without replacement from the original population.  
+### For each variable I am creating, using a for loop, a sample "s" that is a vector of one sample of thirty values for height, or weight, or age, etc. drawn without replacement from the original population.  
 
 ```{r}
 k <- 1  # number of samples
@@ -184,6 +191,9 @@ for (i in 1:k) {
     s[[i]] <- sample(h, size = n, replace = FALSE)
 }
 ```
+
+### Now I am using a for loop to fill vector m with the means of the value sets in s.
+
 ```{r}
 
 m <- NULL
@@ -192,6 +202,8 @@ for (i in 1:k) {
 }
 mean(m)  
 ```
+###Now I am using a for loop to fill vector stdev with the standard deviations of the value sets in s. Then I am calculating a vector of standard error of the means by dividing the values in stdev by the square root of n.
+
 ```{r}
 stdev <- NULL
 for (i in 1:k) {
@@ -199,13 +211,17 @@ for (i in 1:k) {
 }
 sem <- stdev/sqrt(n)  # a vector of SEs estimated from each sample 
 ```
+
+### Now I am generating conf. intervals for 95% using qnorm to get the quantile and multiplying by the average sem.
 ```{r}
 upper <- mean(m) + qnorm(0.95, mean = 0, sd = 1) * mean(sem)
 lower <- mean(m) + qnorm(0.05, mean = 0, sd = 1) * mean(sem)
 ci <- c(lower, upper)
 ci
+# ci for height
+
 ```
-#### Now repeating this process for the other variables that have normal distributions
+### Now repeating this process for the other variables that have normal distributions
 ```{r}
 k <- 1  # number of samples
 n <- 30  # size of each sample
@@ -231,6 +247,8 @@ upper <- mean(m) + qnorm(0.95, mean = 0, sd = 1) * mean(sem)
 lower <- mean(m) + qnorm(0.05, mean = 0, sd = 1) * mean(sem)  
 ci <- c(lower, upper)
 ci
+# ci for weight
+
 
 ####
 
@@ -258,8 +276,14 @@ upper <- mean(m) + qnorm(0.95, mean = 0, sd = 1) * mean(sem)
 lower <- mean(m) + qnorm(0.05, mean = 0, sd = 1) * mean(sem)  
 ci <- c(lower, upper)
 ci
+# ci for age
 
-####
+
+
+```
+#### Now using the same tools to sample from the remaining two variables to obtain means and standard deviations, but using a different formula to get poisson-based confidence intervals. The upper bound is obtained by adding the product of 1.96 and the square root of lambda over n to lambda; the lower bound is obtained by subtracting this value from lambda. 
+
+```{r}
 
 k <- 1  # number of samples
 n <- 30  # size of each sample
@@ -281,18 +305,13 @@ for (i in 1:k) {
 }
 sem <- stdev/sqrt(n)  # a vector of SEs estimated from each sample 
 
-#upper <- mean(m) + qpois(0.95, lambda=mean(m), lower.tail = #TRUE, log.p = FALSE) * mean(sem)
-#lower <- mean(m) + qpois(0.05, lambda=mean(m), lower.tail = #TRUE, log.p = FALSE) * mean(sem) 
 
 upper <- mean(m)+1.96*sqrt(mean(m)/n)
 lower <- mean(m)-1.96*sqrt(mean(m)/n)
 ci <- c(lower, upper)
 ci
+# ci for zombies killed
 
-```
-#### Now using the same tools to sample from the remaining two variables and obtain means and standard deviations, but using a different formula to get poisson-based confidence intervals. The upper bound is obtained by adding the product of 1.96 and the square root of lambda over n to lambda; the lower bound is obtained by subtracting this value from lambda. 
-
-```{r}
 
 k <- 1  # number of samples
 n <- 30  # size of each sample
@@ -322,14 +341,13 @@ lower <- mean(m)-1.96*sqrt(mean(m)/n)
 
 ci <- c(lower, upper)
 ci
-
+# ci for years of education
 
 
 ```
-####
 
 ## Now draw 99 more random samples of 30 zombies out and calculate the mean for each of the these samples. Together with the first sample you drew out, you now have a set of 100 means for each variable (each based on 30 observations), which constitutes a sampling distribution for each variable. What are the means and standard deviations of this distribution for each variable? How do the standard deviations compare to the standard errors estimated in [5]? What do these sampling distributions look like? Are they normally distributed? What about for those variables that you concluded were not originally drawn from a normal distribution?
-###
+### Using the same formulae as above to obtain vectors of means and stdev for the samples but changing k to 99. Then, using hist() and qqnorm() as above on the vectors of means for each variable. 
 
 ```{r}
 k <- 99  # number of samples
